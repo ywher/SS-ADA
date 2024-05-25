@@ -1,0 +1,71 @@
+# arguments for dataset
+dataset: bev_2024
+nclass: 7
+resize_ratio: 1.0
+crop_size: [800, 800]  # 1024  960*1280, 480*640  [800, 1120]
+n_sample: 140
+n_sup: 28
+workers: 4
+data_root: /media/ywh/pool1/yanweihao/projects/active_learning/UniMatch/data/bev_2024
+data_list: /media/ywh/pool1/yanweihao/projects/active_learning/UniMatch/splits/bev_2024/1/labeled.txt
+
+source:
+  use_source: True
+  type: bev_2023
+  data_root: /media/ywh/pool1/yanweihao/projects/active_learning/UniMatch/data/bev_2023
+  data_list: /media/ywh/pool1/yanweihao/projects/active_learning/UniMatch/data/train_list/bev_2023_train_list.txt
+
+val:
+  dataset: bev_2024
+  data_root: /media/ywh/pool1/yanweihao/projects/active_learning/UniMatch/data/bev_2024
+
+# arguments for training
+epochs: 200  # 200
+batch_size: 4 # per GPU x 4 GPUs
+n_gpus: 1
+criterion:
+  name: OHEM  # OHEM
+  fre_cfg:
+    update_fre: False
+    strategy: 'iou_class'  # 'num_class', 'iou_class'
+    upper_value: 2.0
+    normalize_frequencies: True
+  kwargs:
+    ignore_index: 255
+    thresh: 0.7
+    min_kept: 200000
+optim:
+  type: SGD
+  times: 10
+  kwargs:
+    lr: 0.005
+    momentum: 0.9
+    weight_decay: 0.0001
+lr_scheduler:
+  mode: poly
+  warmup: True
+  warmup_iters: 1000
+  warmup_mode: linear
+  warmup_ratio: 0.0005
+  kwargs:
+    power: 0.9
+conf_thresh: 0
+mask_ratio:
+  use_class_threshold: False
+  threshold: 1.0  # "dynamic" (from 1.0 to 0) * iou, or specific (1.0 0.8) * iou
+  dynamic: True
+
+active:
+  init_ratio: 0.01
+  total_ratio: 0.20
+  sample_epoch: [20, 40, 60]  # [30, 60, 100] [1, 2, 3] [20, 40, 60] [10, 20, 30, 40, 50]
+  strategy: entropy  # entropy, confidence, random
+
+m_rwp:
+  use_m_rwp: False
+  alpha: 0.5  # weight for perturbation
+  rho: 0.01
+
+# arguments for model
+backbone: resnet18
+ema_decay: 0.999
