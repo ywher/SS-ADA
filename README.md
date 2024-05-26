@@ -163,8 +163,20 @@ bash scripts/train_bisenetv1.sh 2 10008
 
 ### Train with SS-ADA
 
-set the use source in configs/parking_bev2024_acda_bisenetv1_single,yaml to 
+set the use source in configs/parking_bev2024_acda_bisenetv1_single,yaml to True
 
+and set the n_sup and active.total ratio to the corresponding setting.
+
+Here we take 50% of target labeled data,n_sup=70 and total_ratio=0.50 as example. (70, 0.5; 35, 0.25...))
+
+```
+n_sup: 70
+source:
+  use_source: True
+active:
+  init_ratio: 0.01
+  total_ratio: 0.50
+```
 
 set the scripts/train_acda_bisenet_single.sh as following:
 
@@ -177,31 +189,76 @@ config_name='parking_bev2024_acda_bisenetv1_single'
 init_split=1
 ```
 
-
 Then run the training bash, (n_gpus=1)
 
 ```
 bash scripts/train_acda_bisenetv1_single
 ```
 
+### Evaluation of the model
 
-### Evaluation in Cityscapes-to-Rio setting
+#### Eval of bev2023 source only
 
-More trained models can be found in the following links:
+change the val dataset from bev2023 to bev2024 in parking_bev2023_bisenetv1.yaml
+
+```
+val:
+  dataset: bev_2024
+  data_root: /media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/data/bev_2024
+```
+
+set in scripts/eval_bisenetv1.sh and run "bash scripts/eval_bisenetv1.sh"
+
+```
+dataset="bev_2023"
+config_path="configs/parking_bev2023_bisenetv1.yaml"
+eval_mode="original"
+exp_folder="supervised_bisenetv1_tar"
+split=110
+```
+
+123
+
+#### Eval of bev2024 supervised learning
+
+set in scripts/eval_bisenetv1.sh and run "bash scripts/eval_bisenetv1.sh"
+
+```
+dataset="bev_2024"
+config_path="configs/parking_bev2024_bisenetv1.yaml"
+eval_mode="original"
+exp_folder="supervised_bisenetv1_tar"
+split=140
+```
+
+
+#### Eval of bev2024 joint training
+
+set in scripts/eval_bisenetv1.sh and run "bash scripts/eval_bisenetv1.sh"
+
+```
+dataset="bev_2024"
+config_path="configs/parking_bev2024_bisenetv1.yaml"
+eval_mode="original"
+exp_folder="supervised_bisenetv1_both"
+split=140
+```
+
+
+Our trained models can be found in the following links:
 
 * 50% of the target labeled data:
 * 25% of the target labeled data:
 
-The results of our trained models are listed in the following. The ss and ms mean single scale and multi scale testing respectively.
+The evaluation results of our trained models on bev2024 validation set are listed in the following.
 
-Note that we didn't use the Image Style Translation (IST) like CycleGAN and FDA in these experiments. Using IST, class-level threshold adjusment strategy, and Cross-domain Image Mixing (CIM, stage two) would further improve the adaptation results.
-
-| Setting\iteration (mIoU) | 2k iteration(ss/ms) | best iteration     |
-| ------------------------ | ------------------- | ------------------ |
-| Cityscapes-to-Rome       | 52.27/53.35         | 53.30/53.96 (1.2k) |
-| Cityscapes-to-Rio        | 56.39/58.02         | 56.49/58.53 (1.8k) |
-| Cityscapes-to-Taipei     | 51.05/52.15         | 51.58/52.65 (1.4k) |
-| Cityscapes-to-Tokyo      | 48.59/59.70         | 50.01/51.27 (1k)   |
+|           Setting           | best.pth (mIoU %) | latest.pth (mIoU %) |
+| :-------------------------: | :---------------: | :-----------------: |
+|      bev2023 sup only      |       38.09       |        38.09        |
+| bev2024 supervised learning |       71.63       |        70.20        |
+|   bev2024 joint training   |       74.41       |        72.79        |
+|       ss-ada 50% data       |                  |                    |
+|       ss-ada 25% data       |                  |                    |
 
 # Acknowledgement
 

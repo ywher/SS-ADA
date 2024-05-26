@@ -19,7 +19,7 @@ init_split=1
 config=configs/${config_name}.yaml
 labeled_id_path=splits/$dataset/$init_split/labeled.txt
 unlabeled_id_path=splits/$dataset/$init_split/unlabeled.txt
-save_path=exp/$dataset/$method/$exp/${split}_entropy_200epoch  #_iouclass
+save_path=exp/$dataset/$method/$exp/${split}_entropy_200epoch_iou  #_iouclass
 
 mkdir -p $save_path
 

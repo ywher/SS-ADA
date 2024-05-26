@@ -38,7 +38,7 @@ def get_parse():
     parser.add_argument('--config', type=str, default=os.path.join(work_root, 'configs/parking_bev2024_acda_bisenetv1_single.yaml'))
     parser.add_argument('--labeled-id-path', type=str, default=os.path.join(work_root, 'splits/bev_2024/1/labeled.txt'))
     parser.add_argument('--unlabeled-id-path', type=str, default=os.path.join(work_root, 'splits/bev_2024/1/unlabeled.txt'))
-    parser.add_argument('--save-path', type=str, default=os.path.join(work_root, 'exp/bev_2024/ss_ada_bisenetv1_single/bisenetv1/70_entropy_200epoch'))
+    parser.add_argument('--save-path', type=str, default=os.path.join(work_root, 'exp/bev_2024/ss_ada_bisenetv1_single/bisenetv1/70_entropy_200epoch_iou'))
     return parser.parse_args()
 
 def evaluate_single_gpu(model, loader, mode, cfg, show_bar=False):

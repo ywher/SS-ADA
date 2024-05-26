@@ -26,7 +26,7 @@ n_gpus: 1
 criterion:
   name: OHEM  # OHEM
   fre_cfg:
-    update_fre: False
+    update_fre: True
     strategy: 'iou_class'  # 'num_class', 'iou_class'
     upper_value: 2.0
     normalize_frequencies: True
