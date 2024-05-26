@@ -1,12 +1,12 @@
 pyyaml>=5.4.0
 easydict
 TensorBoardX
-tensorboard
-opencv-python
+tensorboard==2.14.0
+opencv-python==4.9.0.80
 scipy
 scikit-learn
 scikit-image
 einops
 h5py
-tqdm
-six
+tqdm==4.66.4
+six==1.16.0

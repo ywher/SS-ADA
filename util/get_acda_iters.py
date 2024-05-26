@@ -130,7 +130,7 @@ if __name__ == "__main__":
     batch_size = 4
     num_gpus = 1
     
-    yaml_path = "/media/ywh/pool1/yanweihao/projects/active_learning/UniMatch/configs/parking_bev2024_acda_bisenetv1_single.yaml"
+    yaml_path = "/media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/configs/parking_bev2024_acda_bisenetv1_single.yaml"
     cfg = yaml.load(open(yaml_path, 'r'), Loader=yaml.FullLoader)
     
     ac_iter = AC_iters(cfg)

@@ -1,6 +1,6 @@
 ### SYNTHIA
 # python gen_dataset_txt.py \
-# --data_root "/media/ywh/pool1/yanweihao/projects/active_learning/UniMatch/data/synthia" \
+# --data_root "/media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/data/synthia" \
 # --img_dir "RGB" \
 # --img_suffix ".png" \
 # --gt_dir "GT/LABELS_trainid_16" \
@@ -9,7 +9,7 @@
 
 ### acdc
 # python gen_dataset_txt.py \
-# --data_root "/media/ywh/pool1/yanweihao/projects/active_learning/UniMatch/data/acdc" \
+# --data_root "/media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/data/acdc" \
 # --img_dir "rgb_anon/val" \
 # --img_suffix "_rgb_anon.png" \
 # --gt_dir "gt/val" \
@@ -18,7 +18,7 @@
 
 ### cityscapes
 # python gen_dataset_txt.py \
-# --data_root "/media/ywh/pool1/yanweihao/projects/active_learning/UniMatch/data/cityscapes" \
+# --data_root "/media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/data/cityscapes" \
 # --img_dir "leftImg8bit/train" \
 # --img_suffix "_leftImg8bit.png" \
 # --gt_dir "gtFine/train" \
@@ -28,7 +28,7 @@
 
 ### cityscapes_17 for surround_school
 # python gen_dataset_txt.py \
-# --data_root "/media/ywh/pool1/yanweihao/projects/active_learning/UniMatch/data/cityscapes" \
+# --data_root "/media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/data/cityscapes" \
 # --img_dir "leftImg8bit/train_512" \
 # --img_suffix "_leftImg8bit.png" \
 # --gt_dir "gtFine/train_17_512" \
@@ -40,7 +40,7 @@
 ### surround_school
 # split="val"
 # python gen_dataset_txt.py \
-# --data_root "/media/ywh/pool1/yanweihao/projects/active_learning/UniMatch/data/surround_school" \
+# --data_root "/media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/data/surround_school" \
 # --img_dir "leftImg8bit/${split}" \
 # --img_suffix "_Img8bit.png" \
 # --gt_dir "gtFine/${split}" \
@@ -51,7 +51,7 @@
 ### parking_fisheye
 # split="val"
 # python gen_dataset_txt.py \
-# --data_root "/media/ywh/pool1/yanweihao/projects/active_learning/UniMatch/data/parking_fisheye" \
+# --data_root "/media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/data/parking_fisheye" \
 # --img_dir "leftImg8bit/${split}" \
 # --img_suffix "_Img8bit.png" \
 # --gt_dir "gtFine/${split}" \
@@ -62,7 +62,7 @@
 # split="train"
 # dataset="kyxz"
 # python gen_dataset_txt.py \
-# --data_root "/media/ywh/pool1/yanweihao/projects/active_learning/UniMatch/data/kyxz" \
+# --data_root "/media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/data/kyxz" \
 # --img_dir "image/${split}" \
 # --img_suffix ".png" \
 # --gt_dir "label/${split}" \
@@ -73,7 +73,7 @@
 # split="train"
 # dataset="rellis3d"
 # python gen_dataset_txt.py \
-# --data_root "/media/ywh/pool1/yanweihao/projects/active_learning/UniMatch/data/rellis3d" \
+# --data_root "/media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/data/rellis3d" \
 # --img_dir "image" \
 # --img_suffix ".jpg" \
 # --gt_dir "label" \
@@ -85,7 +85,7 @@
 # split="train"
 # dataset="bev_20234_6cls"
 # python gen_dataset_txt.py \
-# --data_root "/media/ywh/pool1/yanweihao/projects/active_learning/UniMatch/data/${dataset}" \
+# --data_root "/media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/data/${dataset}" \
 # --img_dir "image/${split}" \
 # --img_suffix ".png" \
 # --gt_dir "label/${split}" \
@@ -95,7 +95,7 @@
 # split="val"
 # dataset="HYRoad_3cls"
 # python gen_dataset_txt.py \
-# --data_root "/media/ywh/pool1/yanweihao/projects/active_learning/UniMatch/data/${dataset}" \
+# --data_root "/media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/data/${dataset}" \
 # --img_dir "image/${split}" \
 # --img_suffix ".png" \
 # --gt_dir "label/${split}" \
@@ -106,7 +106,7 @@
 # split="val"
 # dataset="avm_seg"
 # python gen_dataset_txt.py \
-# --data_root "/media/ywh/pool1/yanweihao/projects/active_learning/UniMatch/data/${dataset}" \
+# --data_root "/media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/data/${dataset}" \
 # --img_dir "image_rotate_and_resize2/${split}" \
 # --img_suffix ".png" \
 # --gt_dir "label_rotate_and_resize2/${split}" \

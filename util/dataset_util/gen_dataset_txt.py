@@ -58,7 +58,7 @@ def gen_dataset_txt_subfolder(args):
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--data_root', type=str, default='/media/ywh/pool1/yanweihao/projects/active_learning/UniMatch/data/synthia')
+    parser.add_argument('--data_root', type=str, default='/media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/data/synthia')
     parser.add_argument('--img_dir', type=str, default='RGB')
     parser.add_argument('--img_suffix', type=str, default='.png')
     parser.add_argument('--gt_dir', type=str, default='GT/LABELS_trainid_16')

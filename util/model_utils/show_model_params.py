@@ -19,8 +19,8 @@ def show_model_params(model_path):
 
 
 if __name__ == '__main__':
-    model_path = "/media/ywh/pool1/yanweihao/projects/active_learning/UniMatch/exp/avm_seg/supervised_bisenetv1_tar/bisenetv1/6000_200epoch/best.pth"
-    config_apth = "/media/ywh/pool1/yanweihao/projects/active_learning/UniMatch/configs/parking_bev20234_6cls_bisenetv1.yaml"
+    model_path = "/media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/exp/avm_seg/supervised_bisenetv1_tar/bisenetv1/6000_200epoch/best.pth"
+    config_apth = "/media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/configs/parking_bev20234_6cls_bisenetv1.yaml"
     cfg = yaml.load(open(config_apth, "r"), Loader=yaml.Loader)
     model = BiSeNetV1(cfg=cfg)
     show_model_params(model_path)

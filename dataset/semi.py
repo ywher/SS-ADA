@@ -255,12 +255,12 @@ class SemiDataset(Dataset):
         return len(self.ids)
     
 if __name__ =='__main__':
-    yaml_path = '/media/ywh/pool1/yanweihao/projects/active_learning/UniMatch/configs/cityscapes_acda_bisenetv1.yaml'
+    yaml_path = '/media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/configs/cityscapes_acda_bisenetv1.yaml'
     cfg = yaml.load(open(yaml_path, 'r'), Loader=yaml.FullLoader)
 
     # Initialize model
     model = BiSeNetV1(cfg)  # Initialize your segmentation model
-    pretrained_path = "/media/ywh/pool1/yanweihao/projects/active_learning/UniMatch/exp/cityscapes/unimatch_acda_bisenetv1/bisenetv1/entropy/1488/latest.pth"
+    pretrained_path = "/media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/exp/cityscapes/unimatch_acda_bisenetv1/bisenetv1/entropy/1488/latest.pth"
     state_dict = torch.load(pretrained_path, map_location='cpu')
     # remove the prefix 'module.' from the keys
     state_dict['model_state'] = {k[7:]: v for k, v in state_dict['model'].items() if k.startswith('module')}

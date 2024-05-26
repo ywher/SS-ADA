@@ -6,7 +6,7 @@ class tmp():
     
 
 if __name__ == '__main__':
-    yaml_path = "/media/ywh/pool1/yanweihao/projects/active_learning/UniMatch/configs/cityscapes_acda_bisenetv1.yaml"
+    yaml_path = "/media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/configs/cityscapes_acda_bisenetv1.yaml"
     cfg = yaml.load(open(yaml_path, 'r'), Loader=yaml.FullLoader)
     temp = tmp(cfg)
     for i in range(3):

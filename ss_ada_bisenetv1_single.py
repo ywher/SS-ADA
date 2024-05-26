@@ -1,6 +1,7 @@
 import argparse
 import logging
 import os
+import gc
 import pprint
 
 import torch
@@ -12,13 +13,14 @@ import yaml
 import time
 import copy
 import datetime
+from tqdm import tqdm
+import numpy as np
 
 from dataset.semi import SemiDataset
 from model.semseg.bisenetv1 import BiSeNetV1
-from supervised import evaluate, evaluate_single_gpu
 from util.classes import CLASSES
 from util.ohem import ProbOhemCrossEntropy2d
-from util.utils import count_params, init_log, AverageMeter
+from util.utils import count_params, init_log, AverageMeter, intersectionAndUnion_gpu
 from util.optimizer import set_optimizer_bisenet
 from util.scheduler import get_scheduler
 from util.get_acda_iters import AC_iters
@@ -36,8 +38,78 @@ def get_parse():
     parser.add_argument('--config', type=str, default=os.path.join(work_root, 'configs/parking_bev2024_acda_bisenetv1_single.yaml'))
     parser.add_argument('--labeled-id-path', type=str, default=os.path.join(work_root, 'splits/bev_2024/1/labeled.txt'))
     parser.add_argument('--unlabeled-id-path', type=str, default=os.path.join(work_root, 'splits/bev_2024/1/unlabeled.txt'))
-    parser.add_argument('--save-path', type=str, default=os.path.join(work_root, 'exp/bev_2024/unimatch_acda_bisenetv1_single/bisenetv1/28_entropy_200epoch'))
+    parser.add_argument('--save-path', type=str, default=os.path.join(work_root, 'exp/bev_2024/ss_ada_bisenetv1_single/bisenetv1/70_entropy_200epoch'))
     return parser.parse_args()
+
+def evaluate_single_gpu(model, loader, mode, cfg, show_bar=False):
+    model.eval()
+    assert mode in ['original', 'center_crop', 'sliding_window']
+    intersection_meter = AverageMeter()
+    union_meter = AverageMeter()
+
+    if show_bar:
+        bar = tqdm(total=len(loader))
+    with torch.no_grad():
+        for img, mask, id in loader:
+            
+            img = img.cuda()
+            mask = mask.cuda()
+
+            if mode == 'sliding_window':
+                grid = cfg['crop_size']
+                b, _, h, w = img.shape
+                final = torch.zeros(b, cfg['nclass'], h, w).cuda()
+                row = 0
+                while row < h:
+                    col = 0
+                    while col < w:
+                        pred = model(img[:, :, row: min(h, row + grid), col: min(w, col + grid)])
+                        if len(pred) > 1:
+                            pred = pred[0]
+                        final[:, :, row: min(h, row + grid), col: min(w, col + grid)] += pred.softmax(dim=1)
+                        col += int(grid * 2 / 3)
+                    row += int(grid * 2 / 3)
+
+                pred = final.argmax(dim=1)
+
+            else:
+                if mode == 'center_crop':
+                    h, w = img.shape[-2:]
+                    start_h, start_w = (h - cfg['crop_size']) // 2, (w - cfg['crop_size']) // 2
+                    img = img[:, :, start_h:start_h + cfg['crop_size'], start_w:start_w + cfg['crop_size']]
+                    mask = mask[:, start_h:start_h + cfg['crop_size'], start_w:start_w + cfg['crop_size']]
+
+                pred = model(img)
+                if len(pred) > 1:
+                    pred = pred[0]
+                pred = pred.argmax(dim=1)
+
+            # intersection, union, target = intersectionAndUnion(pred.cpu().numpy(), mask.numpy(), cfg['nclass'], 255)
+            intersection, union, target = intersectionAndUnion_gpu(pred, mask, cfg['nclass'], 255)
+
+            # reduced_intersection = torch.from_numpy(intersection).cuda()
+            # reduced_union = torch.from_numpy(union).cuda()
+
+            # intersection_meter.update(reduced_intersection.cpu().numpy())
+            # union_meter.update(reduced_union.cpu().numpy())
+            intersection_meter.update(intersection.cpu().numpy())
+            union_meter.update(union.cpu().numpy())
+            if show_bar:
+                bar.update(1)
+    if show_bar:
+        bar.close()
+
+    iou_class = intersection_meter.sum / (union_meter.sum + 1e-10) * 100.0
+    mIOU = np.mean(iou_class)
+    
+    # Clear CUDA cache
+    torch.cuda.empty_cache()
+    
+    # Call garbage collector
+    gc.collect()
+    
+    model.train()
+    return mIOU, iou_class
 
 def main():
     # get args and config

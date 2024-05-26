@@ -1,22 +1,22 @@
 # arguments for dataset
-dataset: bev_2024
+dataset: bev_2023
 nclass: 7
 resize_ratio: 1.0
 crop_size: [800, 800]  # 1024  960*1280, 480*640  [800, 1120]
-n_sample: 140
+n_sample: 110
 workers: 4
-data_root: /media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/data/bev_2024
-data_list: /media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/data/train_list/bev_2024_train_list.txt
+data_root: /media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/data/bev_2023
+data_list: /media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/data/train_list/bev_2023_train_list.txt
 
 source:
-  use_source: True
+  use_source: False
   type: bev_2023
   data_root: /media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/data/bev_2023
-  data_list: /media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/data/train_list/bev_2023_train_list.txt
+  data_list: /media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/splits/cityscapes/2975_17_512/labeled.txt
 
 val:
-  dataset: bev_2024
-  data_root: /media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/data/bev_2024
+  dataset: bev_2023
+  data_root: /media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/data/bev_2023
 
 # arguments for training
 epochs: 200

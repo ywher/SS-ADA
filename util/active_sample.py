@@ -488,12 +488,12 @@ class AC_Sample:
 
 if __name__ == "__main__":
     # Usage example:
-    yaml_path = "/media/ywh/pool1/yanweihao/projects/active_learning/UniMatch/configs/cityscapes_acda_bisenetv1_single.yaml"
+    yaml_path = "/media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/configs/cityscapes_acda_bisenetv1_single.yaml"
     cfg = yaml.load(open(yaml_path, 'r'), Loader=yaml.FullLoader)
 
     # Initialize model
     model = BiSeNetV1(cfg)  # Initialize your segmentation model
-    pretrained_path = "/media/ywh/pool1/yanweihao/projects/active_learning/UniMatch/exp/cityscapes/supervised_bisenetv1/bisenetv1/1488/latest.pth"
+    pretrained_path = "/media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/exp/cityscapes/supervised_bisenetv1/bisenetv1/1488/latest.pth"
     state_dict = torch.load(pretrained_path, map_location='cpu')
     # remove the prefix 'module.' from the keys
     state_dict['model_state'] = {k[7:]: v for k, v in state_dict['model'].items() if k.startswith('module')}
@@ -507,7 +507,7 @@ if __name__ == "__main__":
     
     # initialize dataloader
     # train_loader_sup, train_loader_unsup, val_loader, source_loader = get_loader_single_gpu(cfg, seed=0, ac_iters=ac_iters, epoch=0)  # Initialize your supervised training data loader
-    output_root = "/media/ywh/pool1/yanweihao/projects/active_learning/UniMatch/exp/cityscapes/unimatch_acda_bisenetv1_single/bisenetv1/1488/acda_log"  # Define your output directory
+    output_root = "/media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/exp/cityscapes/unimatch_acda_bisenetv1_single/bisenetv1/1488/acda_log"  # Define your output directory
 
     # Create AC_Sample instance
     acda_semi = AC_Sample(cfg, ac_iters, output_root)
