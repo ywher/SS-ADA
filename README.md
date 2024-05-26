@@ -231,7 +231,6 @@ exp_folder="supervised_bisenetv1_tar"
 split=140
 ```
 
-
 #### Eval of bev2024 joint training
 
 set in scripts/eval_bisenetv1.sh and run "bash scripts/eval_bisenetv1.sh"
@@ -244,11 +243,10 @@ exp_folder="supervised_bisenetv1_both"
 split=140
 ```
 
-
 Our trained models can be found in the following links:
 
-* 50% of the target labeled data:
-* 25% of the target labeled data:
+* 50% of the target labeled data: https://drive.google.com/drive/folders/1qVgo4uKCH9ZqVFbwAdJ09yLDLQ9wnG3v?usp=sharing
+* 25% of the target labeled data:https://drive.google.com/drive/folders/1NS2da6Dj3thafgNm5MqakZgJO6_FdlWr?usp=sharing
 
 The evaluation results of our trained models on bev2024 validation set are listed in the following.
 
@@ -257,8 +255,8 @@ The evaluation results of our trained models on bev2024 validation set are liste
 |      bev2023 sup only      |       38.09       |        38.09        |
 | bev2024 supervised learning |       71.63       |        70.20        |
 |   bev2024 joint training   |       74.41       |        72.79        |
-|       ss-ada 50% data       |                  |                    |
-|       ss-ada 25% data       |                  |                    |
+|       ss-ada 50% data       |       73.09       |        72.83        |
+|       ss-ada 25% data       |       71.67       |        71.06        |
 
 # Acknowledgement
 

@@ -12,14 +12,14 @@ now=$(date +"%Y%m%d_%H%M%S")
 dataset='bev_2024'
 method='ss_ada_bisenetv1_single'
 exp='bisenetv1'
-split='70'
+split='35'
 config_name='parking_bev2024_acda_bisenetv1_single'
 init_split=1
 
 config=configs/${config_name}.yaml
 labeled_id_path=splits/$dataset/$init_split/labeled.txt
 unlabeled_id_path=splits/$dataset/$init_split/unlabeled.txt
-save_path=exp/$dataset/$method/$exp/${split}_entropy_200epoch_iou  #_iouclass
+save_path=exp/$dataset/$method/$exp/${split}_entropy_200epoch  #_iouclass
 
 mkdir -p $save_path
 

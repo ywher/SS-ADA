@@ -85,7 +85,8 @@ dataset="bev_2024"
 config_path="configs/parking_bev2024_bisenetv1.yaml"
 eval_mode="original"
 exp_folder="supervised_bisenetv1_both"
-for split in 140 # 110_150epoch 110_200epoch
+exp_folder="ss_ada_bisenetv1_single"
+for split in 70_entropy_200epoch_iou # 110_150epoch 110_200epoch
 do
     exp_root="exp/${dataset}/${exp_folder}/bisenetv1/${split}"
     for model_type in "latest" "best"
