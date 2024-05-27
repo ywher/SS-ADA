@@ -247,8 +247,7 @@ def main():
     
     optimizer = set_optimizer_bisenet(model, cfg["optim"])
     
-    model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[local_rank], broadcast_buffers=False,
-                                                      output_device=local_rank, find_unused_parameters=False)
+    model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[local_rank], broadcast_buffers=False, output_device=local_rank, find_unused_parameters=False)
 
     if cfg['criterion']['name'] == 'CELoss':
         criterion = nn.CrossEntropyLoss(**cfg['criterion']['kwargs']).cuda(local_rank)
@@ -287,8 +286,8 @@ def main():
             logger.info('************ Load from checkpoint at epoch %i\n' % epoch)
     
     # set lr scheduler
-    optimizer_start = set_optimizer_bisenet(model, cfg["optim"])
-    lr_scheduler = get_scheduler(cfg, len(trainloader), optimizer_start, start_epoch=epoch + 1)
+    # optimizer_start = set_optimizer_bisenet(model, cfg["optim"])
+    lr_scheduler = get_scheduler(cfg, len(trainloader), optimizer, start_epoch=epoch + 1)
     
     global_start_time = time.time()
     start_iters = (epoch + 1) * len(trainloader)
@@ -296,7 +295,7 @@ def main():
     for epoch in range(epoch + 1, cfg['epochs']):
         if rank == 0:
             logger.info('===========> Epoch: {:}, LR: {:.5f}, Previous best: {:.2f}'.format(
-                epoch, lr_scheduler.cur_lr[0], previous_best))
+                epoch, optimizer.param_groups[0]['lr'], previous_best))
 
         model.train()
         sup_total_loss = AverageMeter()

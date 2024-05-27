@@ -9,7 +9,7 @@ data_root: /media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/data/bev_2
 data_list: /media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/data/train_list/bev_2024_train_list.txt
 
 source:
-  use_source: True
+  use_source: False
   type: bev_2023
   data_root: /media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/data/bev_2023
   data_list: /media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/data/train_list/bev_2023_train_list.txt

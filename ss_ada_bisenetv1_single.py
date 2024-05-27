@@ -198,8 +198,8 @@ def main():
         logger.info('************ Load from checkpoint at epoch %i\n' % epoch)
     
     ### set lr scheduler
-    optimizer_start = set_optimizer_bisenet(model, cfg["optim"])
-    lr_scheduler = get_scheduler(cfg, len(trainloader_u), optimizer_start, start_epoch=epoch + 1, ac_iters=ac_iters)
+    # optimizer_start = set_optimizer_bisenet(model, cfg["optim"])
+    lr_scheduler = get_scheduler(cfg, len(trainloader_u), optimizer, start_epoch=epoch + 1, ac_iters=ac_iters)
     
     ### set AC_Sampler
     AC_Sampler = AC_Sample(config=cfg, ac_iters=ac_iters, output_root=os.path.join(args.save_path, 'acda_log'))
