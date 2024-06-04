@@ -19,7 +19,7 @@ val:
   data_root: /media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/data/bev_2024
 
 # arguments for training
-epochs: 200
+epochs: 100
 batch_size: 2 # per GPU x 4 GPUs
 n_gpus: 2
 criterion:
@@ -32,7 +32,7 @@ optim:
   type: SGD
   times: 10
   kwargs:
-    lr: 0.001
+    lr: 0.01
     momentum: 0.9
     weight_decay: 0.0001
 lr_scheduler:

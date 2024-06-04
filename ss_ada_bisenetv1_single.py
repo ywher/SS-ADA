@@ -27,8 +27,8 @@ from util.get_acda_iters import AC_iters
 from util.active_sample import AC_Sample
 from util.functions import generate_confidence_mask
 
-# cuda_id = 1
-# torch.cuda.set_device(cuda_id)
+cuda_id = 1
+torch.cuda.set_device(cuda_id)
 
 # the work root
 work_root=os.path.abspath(os.path.join(os.path.dirname(__file__)))
@@ -38,7 +38,7 @@ def get_parse():
     parser.add_argument('--config', type=str, default=os.path.join(work_root, 'configs/parking_bev2024_acda_bisenetv1_single.yaml'))
     parser.add_argument('--labeled-id-path', type=str, default=os.path.join(work_root, 'splits/bev_2024/1/labeled.txt'))
     parser.add_argument('--unlabeled-id-path', type=str, default=os.path.join(work_root, 'splits/bev_2024/1/unlabeled.txt'))
-    parser.add_argument('--save-path', type=str, default=os.path.join(work_root, 'exp/bev_2024/ss_ada_bisenetv1_single/bisenetv1/35_entropy_200epoch'))
+    parser.add_argument('--save-path', type=str, default=os.path.join(work_root, 'exp/bev_2024/ss_ada_bisenetv1_single/bisenetv1/70_entropy_200epoch_0.05'))
     return parser.parse_args()
 
 def evaluate_single_gpu(model, loader, mode, cfg, show_bar=False):
@@ -198,8 +198,8 @@ def main():
         logger.info('************ Load from checkpoint at epoch %i\n' % epoch)
     
     ### set lr scheduler
-    # optimizer_start = set_optimizer_bisenet(model, cfg["optim"])
-    lr_scheduler = get_scheduler(cfg, len(trainloader_u), optimizer, start_epoch=epoch + 1, ac_iters=ac_iters)
+    optimizer_start = set_optimizer_bisenet(model, cfg["optim"])
+    lr_scheduler = get_scheduler(cfg, len(trainloader_u), optimizer_start, start_epoch=epoch + 1, ac_iters=ac_iters)
     
     ### set AC_Sampler
     AC_Sampler = AC_Sample(config=cfg, ac_iters=ac_iters, output_root=os.path.join(args.save_path, 'acda_log'))

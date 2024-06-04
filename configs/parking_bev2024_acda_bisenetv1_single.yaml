@@ -4,7 +4,7 @@ nclass: 7
 resize_ratio: 1.0
 crop_size: [800, 800]  # 1024  960*1280, 480*640  [800, 1120]
 n_sample: 140
-n_sup: 35
+n_sup: 70
 workers: 4
 data_root: /media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/data/bev_2024
 data_list: /media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/splits/bev_2024/1/labeled.txt
@@ -38,7 +38,7 @@ optim:
   type: SGD
   times: 10
   kwargs:
-    lr: 0.005
+    lr: 0.05
     momentum: 0.9
     weight_decay: 0.0001
 lr_scheduler:
@@ -57,7 +57,7 @@ mask_ratio:
 
 active:
   init_ratio: 0.01
-  total_ratio: 0.25
+  total_ratio: 0.5
   sample_epoch: [20, 40, 60]  # [30, 60, 100] [1, 2, 3] [20, 40, 60] [10, 20, 30, 40, 50]
   strategy: entropy  # entropy, confidence, random
 
