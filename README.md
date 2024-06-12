@@ -4,7 +4,7 @@ Official implementation of "SS-ADA: A Semi-Supervised Active Domain Adaptation F
 
 ## Abstract
 
-Semantic segmentation plays an important role in intelligent vehicle which provides pixel-level semantic information. However, the labeling budget for semantic segmentation is expensive and time-consuming. To reduce the cost, domain adaptation methods are proposed to transfer the knowledge from  labeled source domain to the unseen target domain. Among them, semi-supervised and active learning-based methods are proposed to improve the segmentation performance using limited labeled data from target domain. Semi-supervised-based methods suffer from the noisy pseudo-labels due to the domain shift and lack of accurate semantic guidance. Active learning-based methods requires the human annotation for better performance but neglect the potential of the unlabeled data. In this paper, we propose a novel semi-supervised active domain adaptation (SS-ADA) framework for semantic segmentation. SS-ADA combines the advantages of semi-supervised learning and active learning to achieve supervised learning accuracy using limited labeled data from the target domain. We also design the IoU-based class weighting strategy to alleviate the class imbalance problem using the annotation from active learning. We conducted extensive experiments on synthetic-to-real and real-to-real domain adaptation settings, and the results demonstrate the effectiveness of our method. SS-ADA can achieve or even surpass the accuracy of supervised learning counterpart with only 25\% of target labeled data using real-time segmentation model. The code will be released at \url{https://github.com/ywher/SS-ADA}.
+Semantic segmentation plays an important role in intelligent vehicles, providing pixel-level semantic information about the environment. However, the labeling budget is expensive and time-consuming when semantic segmentation model is applied to new driving scenarios. To reduce the costs, semi-supervised semantic segmentation methods have been proposed to leverage large quantities of unlabeled images. Despite this, their performance still lags behind the accuracy of supervised learning, which is desired in practical applications. A significant shortcoming is that they typically select unlabeled images for annotation randomly, neglecting the assessment of sample value for model training. In this paper, we propose a novel semi-supervised active domain adaptation (SS-ADA) framework for semantic segmentation that employs an image-level acquisition strategy. SS-ADA integrates active learning into semi-supervised semantic segmentation to achieve the accuracy of supervised learning with a limited amount of labeled data from the target domain. Additionally, we design an IoU-based class weighting strategy to alleviate the class imbalance problem using annotations from active learning. We conducted extensive experiments on synthetic-to-real and real-to-real domain adaptation settings. The results demonstrate the effectiveness of our method. SS-ADA can achieve or even surpass the accuracy of its supervised learning counterpart with only 25\% of the target labeled data when using a real-time segmentation model. The code for SS-ADA is available at \url{https://github.com/ywher/SS-ADA}.
 
 ## Environment Setup
 
@@ -34,9 +34,9 @@ cd SS-ADA
 
 ## Dataset preparation
 
-Here we only show how to set the bev2023-to-bev2024, and Cityscapes-to-FisheyeCampus settings. You can prepare the GTA5-to-Cityscapes,  SYNTHIA-to-Cityscapes, and Cityscapes-to-ACDC datasets similarly.
+Here we only show how to set the GTA5-to-Cityscapes and bev2023-to-bev2024 settings. You can prepare the SYNTHIA-to-Cityscapes, Cityscapes-to-ACDC , and Cityscapes-to-FisheyeCampus datasets similarly.
 
-[Download bev2023 and bev2024 dataset](https://drive.google.com/drive/folders/1Zl7nbNrUOAjbHtXtQeLsntmvukhR6g_4?usp=sharing), then organize the folder as follows:
+[Download bev2023, bev2024](https://drive.google.com/drive/folders/1Zl7nbNrUOAjbHtXtQeLsntmvukhR6g_4?usp=sharing), GTA5, and Cityscapes datasets then organize the folder as follows:
 
 ```
 |SS-ADA/data
@@ -62,15 +62,9 @@ Here we only show how to set the bev2023-to-bev2024, and Cityscapes-to-FisheyeCa
 |     |   ├── gtFine/
 |     |   |   ├── train/
 |     |   |   ├── val/
-│     ├── fisheyecampus/   
-|     |   ├── leftImg8bit/
-|     |   |   ├── train/
-|     |   |   ├── val/
-|     |   ├── gtFine/
-|     |   |   ├── train/
-|     |   |   ├── val/
-
-
+│     ├── gtav/   
+|     |   ├── images/
+|     |   ├── labels/
       ...
 ```
 
@@ -90,7 +84,13 @@ We use one 3090 GPU for training and evaluation.
 
 Remember to change the work root from "/media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA" in configs/*.yaml to your own SS-ADA root
 
-### Train with bev2023 (source only)
+### Train with GTA5-to-Cityscapes
+
+TBD
+
+### Train with bev2023-to-bev2024
+
+#### Train with bev2023 (source only)
 
 set the scripts/train_bisenet.sh as following:
 
@@ -108,7 +108,7 @@ Then run the training bash, (n_gpus=2, port=1008)
 bash scripts/train_bisenetv1.sh 2 10008
 ```
 
-### Train with bev2024 (target only, supervised learning)
+#### Train with bev2024 (target only, supervised learning)
 
 set the use source in configs/parking_bev2024_bisenetv1.yaml to False
 
@@ -133,7 +133,7 @@ Then run the training bash, (n_gpus=2, port=1008)
 bash scripts/train_bisenetv1.sh 2 10008
 ```
 
-### Train with bev2023 and bev2024 (joint training)
+#### Train with bev2023 and bev2024 (joint training)
 
 set the use source in configs/parking_bev2024_bisenetv1.yaml to True
 
@@ -197,7 +197,31 @@ bash scripts/train_acda_bisenetv1_single
 
 ### Evaluation of the model
 
-#### Eval of bev2023 source only
+#### Eval of models on GTA5-to-Cityscapes
+
+##### Eval of bev2023 source only
+
+TBD
+
+##### Eval of bev2024 supervised learning
+
+TBD
+
+##### Eval of bev2024 joint training
+
+TBD
+
+##### Eval of SS-ADA model
+
+Our trained models can be found in the following links:
+
+* 50% of the target labeled data: https://drive.google.com/file/d/10gki3Fk5V0ZWwiWYZ80DLY-aPBJdD9pk/view?usp=drive_link
+* 25% of the target labeled data: https://drive.google.com/file/d/1ApSkCi7ELP71oEvcvqi9a0FsjGV6qKyQ/view?usp=drive_link
+* 12.5% of the target labeled data: https://drive.google.com/file/d/1YThOOARCUUrAsGxyt11hv_KfGtTVKOY0/view?usp=drive_link
+
+#### Eval of bev2023/2024
+
+##### Eval of bev2023 source only
 
 change the val dataset from bev2023 to bev2024 in parking_bev2023_bisenetv1.yaml
 
@@ -219,7 +243,7 @@ split=110
 
 123
 
-#### Eval of bev2024 supervised learning
+##### Eval of bev2024 supervised learning
 
 set in scripts/eval_bisenetv1.sh and run "bash scripts/eval_bisenetv1.sh"
 
@@ -231,7 +255,7 @@ exp_folder="supervised_bisenetv1_tar"
 split=140
 ```
 
-#### Eval of bev2024 joint training
+##### Eval of bev2024 joint training
 
 set in scripts/eval_bisenetv1.sh and run "bash scripts/eval_bisenetv1.sh"
 
