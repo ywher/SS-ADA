@@ -1,8 +1,6 @@
-# from supervised import evaluate_single_gpu
 from supervised_bisenetv1_tar import evaluate_single_gpu
 import torch
 import argparse
-import datetime
 import numpy as np
 import yaml
 import os

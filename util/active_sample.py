@@ -5,7 +5,7 @@ import numpy as np
 from PIL import Image
 import torch
 import torchvision.transforms as transforms
-from torch.utils.data import DataLoader
+# from torch.utils.data import DataLoader
 
 import yaml
 from tqdm import tqdm
@@ -15,8 +15,6 @@ from util.functions import calculate_entropy, calculate_confidence, save_predict
 from util.get_acda_iters import AC_iters
 from util.utils import AverageMeter, intersectionAndUnion_gpu
 from model.semseg.bisenetv1 import BiSeNetV1  # 导入分割模型
-# from u2pl.dataset.builder import get_loader_single_gpu
-# from u2pl.dataset import augmentation as psp_trsform
 
 class AC_Sample:
     def __init__(self, config, ac_iters, output_root):

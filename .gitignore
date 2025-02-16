@@ -4,3 +4,4 @@ exp/*
 pretrained/*
 */__pycache__/*
 __pycache__/*
+*.pyc

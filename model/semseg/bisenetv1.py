@@ -5,7 +5,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import torchvision
+# import torchvision
 import logging
 
 from model.backbone.resnet18 import Resnet18

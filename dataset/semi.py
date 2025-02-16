@@ -14,7 +14,7 @@ from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
 from model.semseg.bisenetv1 import BiSeNetV1
 # from util.get_acda_iters import AC_iters
-from util.ohem import ProbOhemCrossEntropy2d
+# from util.ohem import ProbOhemCrossEntropy2d
 
 class SemiDataset(Dataset):
     def __init__(self, name, root, mode, size=None, id_path=None, nsample=None, ac_iters=None, n_class=19, resize_ratio=1.0):

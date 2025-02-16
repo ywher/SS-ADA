@@ -3,8 +3,8 @@
 
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
-import torch.utils.model_zoo as modelzoo
+# import torch.nn.functional as F
+# import torch.utils.model_zoo as modelzoo
 # from .layers import FrozenBatchNorm2d
 import sys
 import os
