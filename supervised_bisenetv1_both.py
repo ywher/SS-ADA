@@ -26,14 +26,15 @@ from util.dist_helper import setup_distributed
 from util.optimizer import set_optimizer_bisenet
 from util.scheduler import get_scheduler
 
-
-parser = argparse.ArgumentParser(description='Revisiting Weak-to-Strong Consistency in Semi-Supervised Semantic Segmentation')
-parser.add_argument('--config', type=str, required=True)
-parser.add_argument('--labeled-id-path', type=str, required=True)
-parser.add_argument('--unlabeled-id-path', type=str, default=None)
-parser.add_argument('--save-path', type=str, required=True)
-parser.add_argument('--local_rank', default=0, type=int)
-parser.add_argument('--port', default=None, type=int)
+def get_args():
+    parser = argparse.ArgumentParser(description='Revisiting Weak-to-Strong Consistency in Semi-Supervised Semantic Segmentation')
+    parser.add_argument('--config', type=str, required=True)
+    parser.add_argument('--labeled-id-path', type=str, required=True)
+    parser.add_argument('--unlabeled-id-path', type=str, default=None)
+    parser.add_argument('--save-path', type=str, required=True)
+    parser.add_argument('--local_rank', default=0, type=int)
+    parser.add_argument('--port', default=None, type=int)
+    return parser.parse_args()
 
 
 def evaluate(model, loader, mode, cfg):
@@ -163,7 +164,7 @@ def evaluate_single_gpu(model, loader, mode, cfg):
 
 
 def main():
-    args = parser.parse_args()
+    args = get_args()
 
     cfg = yaml.load(open(args.config, "r"), Loader=yaml.Loader)
 

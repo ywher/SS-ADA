@@ -6,18 +6,18 @@ crop_size: [800, 800]  # 1024  960*1280, 480*640  [800, 1120]
 n_sample: 140
 n_sup: 70
 workers: 4
-data_root: /media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/data/bev_2024
-data_list: /media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/splits/bev_2024/1/labeled.txt
+data_root: data/bev_2024
+data_list: splits/bev_2024/1/labeled.txt
 
 source:
   use_source: True
   type: bev_2023
-  data_root: /media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/data/bev_2023
-  data_list: /media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/data/train_list/bev_2023_train_list.txt
+  data_root: data/bev_2023
+  data_list: data/train_list/bev_2023_train_list.txt
 
 val:
   dataset: bev_2024
-  data_root: /media/ywh/pool1/yanweihao/projects/active_learning/SS-ADA/data/bev_2024
+  data_root: data/bev_2024
 
 # arguments for training
 epochs: 200  # 200
