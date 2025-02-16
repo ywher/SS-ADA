@@ -3,3 +3,4 @@ data/bev_2024
 exp/*
 pretrained/*
 */__pycache__/*
+__pycache__/*
