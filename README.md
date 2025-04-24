@@ -36,7 +36,7 @@ cd SS-ADA
 
 Here we only show how to set the GTA5-to-Cityscapes and bev2023-to-bev2024 settings. You can prepare the SYNTHIA-to-Cityscapes, Cityscapes-to-ACDC , and Cityscapes-to-FisheyeCampus datasets similarly.
 
-[Download bev2023, bev2024](https://drive.google.com/drive/folders/1Zl7nbNrUOAjbHtXtQeLsntmvukhR6g_4?usp=sharing), GTA5, and Cityscapes datasets then organize the folder as follows:
+Download GTA5, and Cityscapes datasets then organize the folder as follows. The bev2023 and bev2024 are collected by ourselves and will be made public after the paper is accepted.
 
 ```
 |SS-ADA/data
@@ -86,7 +86,30 @@ Remember to change the work root from "/media/ywh/pool1/yanweihao/projects/activ
 
 ### Train with GTA5-to-Cityscapes
 
-TBD
+#### Train with Cityscapes (target only, supervised learning)
+
+set the use source in configs/cityscapes_bisenetv1.yaml to False
+
+```
+source:
+  use_source: False
+```
+
+set the scripts/train_bisenet.sh as following:
+
+```
+dataset='cityscapes'
+method='supervised_bisenetv1_tar'
+exp='bisenetv1'
+split='2975'
+config_name='cityscapes_bisenetv1'
+```
+
+Then run the training bash, (n_gpus=2, port=1008)
+
+```
+bash scripts/train_bisenetv1.sh 2 10008
+```
 
 ### Train with bev2023-to-bev2024
 

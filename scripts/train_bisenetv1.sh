@@ -16,11 +16,11 @@ now=$(date +"%Y%m%d_%H%M%S")
 # config_name='parking_bev2023_bisenetv1'
 
 # bev2024 supervised learning
-dataset='bev_2024'
-method='supervised_bisenetv1_tar'
-exp='bisenetv1'
-split='140'
-config_name='parking_bev2024_bisenetv1'
+# dataset='bev_2024'
+# method='supervised_bisenetv1_tar'
+# exp='bisenetv1'
+# split='140'
+# config_name='parking_bev2024_bisenetv1'
 
 # bev2024 joint training
 # dataset='bev_2024'
@@ -29,10 +29,17 @@ config_name='parking_bev2024_bisenetv1'
 # split='140'
 # config_name='parking_bev2024_bisenetv1'
 
+# CityScapes supervised learning
+dataset='cityscapes'
+method='supervised_bisenetv1_tar'
+exp='bisenetv1'
+split='2975'
+config_name='cityscapes_bisenetv1'
+
 config=configs/${config_name}.yaml
 labeled_id_path=splits/$dataset/$split/labeled.txt
 unlabeled_id_path=splits/$dataset/$split/unlabeled.txt
-save_path=exp/$dataset/$method/$exp/${split}_100epoch_lr0.01
+save_path=exp/$dataset/$method/$exp/${split}_200epoch_lr0.005
 
 mkdir -p $save_path
 

@@ -347,31 +347,31 @@ def main():
                 max_memory_allocated = torch.cuda.max_memory_allocated() / (1024 ** 3) # from bytes to GB
                 logger.info('Iters: {}/{}\t, Eta: {}, Total loss: {:.3f}, Sup loss: {:.3f}, Aux loss1: {:.3f}, Aux loss2: {:.3f}, Cur Mem: {:.2f}, Max Mem: {:.2f}'.format(iters, total_iters, eta, sup_total_loss.avg, sup_loss.avg, sup_loss_aux1.avg, sup_loss_aux2.avg, cur_memory_allocated, max_memory_allocated))
 
-        eval_mode = 'sliding_window' if cfg['dataset'] in ['cityscapes', 'syn_city', 'acdc'] else 'original'
-        # eval_mode = 'sliding_window' if cfg['dataset'] in ['cityscapes', 'syn_city'] else 'original'
-        mIoU, iou_class = evaluate(model, valloader, eval_mode, cfg, rank)
+        if (epoch + 1) % cfg['eval_interval'] == 0:
+            eval_mode = 'sliding_window' if cfg['dataset'] in ['cityscapes', 'syn_city', 'acdc'] else 'original'
+            mIoU, iou_class = evaluate(model, valloader, eval_mode, cfg, rank)
 
-        if rank == 0:
-            for (cls_idx, iou) in enumerate(iou_class):
-                logger.info('***** Evaluation ***** >>>> Class [{:} {:}] IoU: {:.2f}'.format(cls_idx, CLASSES[cfg['dataset']][cls_idx], iou))
-            logger.info('***** Evaluation {} ***** >>>> MeanIoU: {:.2f}\n'.format(eval_mode, mIoU))
-            
-            writer.add_scalar('eval/mIoU', mIoU, epoch)
-            for i, iou in enumerate(iou_class):
-                writer.add_scalar('eval/%s_IoU' % (CLASSES[cfg['dataset']][i]), iou, epoch)
+            if rank == 0:
+                for (cls_idx, iou) in enumerate(iou_class):
+                    logger.info('***** Evaluation ***** >>>> Class [{:} {:}] IoU: {:.2f}'.format(cls_idx, CLASSES[cfg['dataset']][cls_idx], iou))
+                logger.info('***** Evaluation {} ***** >>>> MeanIoU: {:.2f}\n'.format(eval_mode, mIoU))
+                
+                writer.add_scalar('eval/mIoU', mIoU, epoch)
+                for i, iou in enumerate(iou_class):
+                    writer.add_scalar('eval/%s_IoU' % (CLASSES[cfg['dataset']][i]), iou, epoch)
 
-        is_best = mIoU > previous_best
-        previous_best = max(mIoU, previous_best)
-        if rank == 0:
-            checkpoint = {
-                'model': model.state_dict(),
-                'optimizer': optimizer.state_dict(),
-                'epoch': epoch,
-                'previous_best': previous_best,
-            }
-            torch.save(checkpoint, os.path.join(args.save_path, 'latest.pth'))
-            if is_best:
-                torch.save(checkpoint, os.path.join(args.save_path, 'best.pth'))
+            is_best = mIoU > previous_best
+            previous_best = max(mIoU, previous_best)
+            if rank == 0:
+                checkpoint = {
+                    'model': model.state_dict(),
+                    'optimizer': optimizer.state_dict(),
+                    'epoch': epoch,
+                    'previous_best': previous_best,
+                }
+                torch.save(checkpoint, os.path.join(args.save_path, 'latest.pth'))
+                if is_best:
+                    torch.save(checkpoint, os.path.join(args.save_path, 'best.pth'))
 
 
 if __name__ == '__main__':
